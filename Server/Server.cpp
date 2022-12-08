@@ -3,9 +3,16 @@
 #include <string>
 #pragma comment(lib, "Ws2_32.lib")
 #include <fstream>
+#include <direct.h>
+#define GetCurrentDir _getcwd
 #define MAX_LINES 1000
 using namespace std;
-
+string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
+	GetCurrentDir(buff, FILENAME_MAX);
+	string current_working_dir(buff);
+	return current_working_dir;
+}
 int main()
 {
 	string filename = "Data.txt";
@@ -63,8 +70,6 @@ again:
 		WSACleanup();
 		return 0;
 	}
-
-
 	cout << "Waiting for client connection\n" << endl;
 
 	//accepts a connection from a client
@@ -119,6 +124,26 @@ again:
 		}
 	}
 	outFile.close();
+
+	string path = get_current_dir();
+	int len = path.length();
+	string str2 = path.substr(0, len - 6);
+	str2 += "C++ network winform\\Data.txt";
+
+	ofstream outFile_Client;
+	outFile_Client.open(str2, ofstream::out);
+	if (outFile_Client.fail())
+	{
+		cout << "Error opening file." << endl;
+		return 1;
+	}
+	for (int i = 0; i < lines; i++)
+	{
+		if (!array[i].empty()) {
+			outFile_Client << array[i] << endl;
+		}
+	}
+	outFile_Client.close();
 
 	return 1;
 }

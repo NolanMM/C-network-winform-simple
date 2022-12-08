@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <Windows.h>
+#include <fstream>
 #pragma once
 //#include <bits/stdc++.h>
 #include <windows.networking.sockets.h>
@@ -10,7 +11,7 @@
 #include <msclr\marshal_cppstd.h>
 using namespace msclr::interop;
 //using namespace msclr::interop;
-
+#define MAX_LINES 1000
 
 using namespace std;
 namespace Cnetworkwinform {
@@ -72,6 +73,7 @@ namespace Cnetworkwinform {
 
 
 	private: System::Windows::Forms::ColumnHeader^ Respond;
+	private: System::Windows::Forms::Label^ label4;
 	public:
 	private:
 
@@ -121,6 +123,7 @@ namespace Cnetworkwinform {
 			this->End = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->Post_Content_box = (gcnew System::Windows::Forms::TextBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Welcome_Label
@@ -272,7 +275,7 @@ namespace Cnetworkwinform {
 			this->Error_mess->BackColor = System::Drawing::Color::Black;
 			this->Error_mess->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
 			this->Error_mess->ForeColor = System::Drawing::Color::Red;
-			this->Error_mess->Location = System::Drawing::Point(352, 201);
+			this->Error_mess->Location = System::Drawing::Point(352, 135);
 			this->Error_mess->Name = L"Error_mess";
 			this->Error_mess->Size = System::Drawing::Size(838, 54);
 			this->Error_mess->TabIndex = 13;
@@ -332,6 +335,19 @@ namespace Cnetworkwinform {
 			this->Post_Content_box->Size = System::Drawing::Size(309, 153);
 			this->Post_Content_box->TabIndex = 17;
 			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->BackColor = System::Drawing::Color::Black;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
+			this->label4->ForeColor = System::Drawing::Color::Red;
+			this->label4->Location = System::Drawing::Point(623, 226);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(499, 54);
+			this->label4->TabIndex = 18;
+			this->label4->Text = L"Post History In System File";
+			this->label4->Visible = false;
+			// 
 			// Client_Form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -339,6 +355,7 @@ namespace Cnetworkwinform {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1394, 768);
+			this->Controls->Add(this->label4);
 			this->Controls->Add(this->Post_Content_box);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->End);
@@ -428,15 +445,17 @@ namespace Cnetworkwinform {
 			items->SubItems->Add(Topic_box->Text);
 			items->SubItems->Add(Post_Content_box->Text);
 			items->SubItems->Add(Respond);
-			Listview_topic->Items->Add(items);
-
+			//
+			Listview_topic->Items->Insert(0, items);
+			//
 			Post_Content_box->Clear();
 			Author_Name_box->Clear();
 			Topic_box->Clear();
 			Total.erase();
 		}
-			   SOCKET ClientSocket_2;
+		SOCKET ClientSocket_2;
 private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs^ e) {
+
 	//starts Winsock DLLs
 	WSADATA wsaData;
 	if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
@@ -450,7 +469,6 @@ private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs
 		WSACleanup();
 		return;
 	}
-
 	//Connect socket to specified server
 	sockaddr_in SvrAddr;
 	SvrAddr.sin_family = AF_INET;						//Address family type itnernet
@@ -464,6 +482,82 @@ private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs
 	else {
 		ClientSocket_2 = ClientSocket;
 	}
+
+	string filename = "Data.txt";
+	ifstream file;
+
+	
+	file.open(filename);
+	if (file.fail())
+	{
+		cout << "File failed to open." << endl;
+	}
+	string array[MAX_LINES];
+	int lines = 0;
+	while (!file.eof())
+	{
+		string delimiter = " --- ";
+		getline(file, array[lines]);
+		
+		if (lines == MAX_LINES)
+		{
+			cout << "Max storage reached" << endl;
+			break;
+		}
+		size_t pos = 0;
+		string token;
+		int count = 0;
+		string Items[3];
+
+		while ((pos = array[lines].find(delimiter)) != string::npos) {
+			token = array[lines].substr(0, pos);
+			Items[count] = token;
+			count++;
+			Items[2] = array[lines].erase(0, pos + delimiter.length());
+		}
+
+		string delimiter_author = "Author Name: ";
+		string author_name_;
+		while ((pos = Items[0].find(delimiter_author)) != string::npos) {
+			token = Items[0].substr(0, pos);
+			author_name_ = token;
+			author_name_ = Items[0].erase(0, pos + delimiter_author.length());
+		}
+		String^ author_name = gcnew String(author_name_.c_str());
+		
+
+		string delimiter_topic = "Topic: ";
+		string topic_name_;
+		while ((pos = Items[1].find(delimiter_topic)) != string::npos) {
+			token = Items[1].substr(0, pos);
+			topic_name_ = token;
+			topic_name_ = Items[1].erase(0, pos + delimiter_topic.length());
+		}
+		String^ topic = gcnew String(topic_name_.c_str());
+
+		string delimiter_Content = "Post Content: ";
+		string Description_;
+		while ((pos = Items[2].find(delimiter_Content)) != string::npos) {
+			token = Items[2].substr(0, pos);
+			Description_ = token;
+			Description_ = Items[2].erase(0, pos + delimiter_Content.length());
+		}
+		String^ Desctiption = gcnew String(Description_.c_str());
+
+		String^ Respond = gcnew String("Received");
+		if (author_name->Length != 0)
+		{
+			ListViewItem^ items = gcnew ListViewItem(author_name);
+			items->SubItems->Add(topic);
+			items->SubItems->Add(Desctiption);
+			items->SubItems->Add(Respond);
+			Listview_topic->Items->Insert(0, items);
+		}
+		lines++;
+	}
+
+	file.close();
+	
 }
 
 private: System::Void Disconnect_btn_Click(System::Object^ sender, System::EventArgs^ e) {
