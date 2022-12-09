@@ -1,4 +1,7 @@
 // Include all the library that needed for the program
+//
+//  Server Program Created by Minh Le Nguyen - Conestoga College
+// 
 #include <windows.networking.sockets.h>
 #include <iostream>
 #include <string>

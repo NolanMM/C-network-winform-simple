@@ -1,5 +1,8 @@
 #pragma once
-// Includes all the library needed for the program
+//
+//  Client Program Created by Minh Le Nguyen - Conestoga College
+// 
+//	Includes all the library needed for the program
 #include "stdafx.h"
 #include <Windows.h>
 #include <fstream>
@@ -183,8 +186,15 @@ namespace Cnetworkwinform {
 			// Send_To_Server_btn
 			// 
 			this->Send_To_Server_btn->BackColor = System::Drawing::Color::Black;
-			this->Send_To_Server_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
+			this->Send_To_Server_btn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->Send_To_Server_btn->FlatAppearance->BorderColor = System::Drawing::Color::White;
+			this->Send_To_Server_btn->FlatAppearance->BorderSize = 100;
+			this->Send_To_Server_btn->FlatAppearance->CheckedBackColor = System::Drawing::Color::Red;
+			this->Send_To_Server_btn->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->Send_To_Server_btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->Send_To_Server_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold));
 			this->Send_To_Server_btn->ForeColor = System::Drawing::Color::Red;
 			this->Send_To_Server_btn->Location = System::Drawing::Point(408, 544);
 			this->Send_To_Server_btn->Name = L"Send_To_Server_btn";
@@ -262,12 +272,19 @@ namespace Cnetworkwinform {
 			// Exit_btn
 			// 
 			this->Exit_btn->BackColor = System::Drawing::Color::Black;
-			this->Exit_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
+			this->Exit_btn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->Exit_btn->FlatAppearance->BorderColor = System::Drawing::Color::White;
+			this->Exit_btn->FlatAppearance->BorderSize = 100;
+			this->Exit_btn->FlatAppearance->CheckedBackColor = System::Drawing::Color::Red;
+			this->Exit_btn->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->Exit_btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->Exit_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold));
 			this->Exit_btn->ForeColor = System::Drawing::Color::Red;
-			this->Exit_btn->Location = System::Drawing::Point(720, 545);
+			this->Exit_btn->Location = System::Drawing::Point(720, 544);
 			this->Exit_btn->Name = L"Exit_btn";
-			this->Exit_btn->Size = System::Drawing::Size(274, 45);
+			this->Exit_btn->Size = System::Drawing::Size(299, 46);
 			this->Exit_btn->TabIndex = 11;
 			this->Exit_btn->Text = L"Close Server and Client";
 			this->Exit_btn->UseVisualStyleBackColor = false;
@@ -290,12 +307,13 @@ namespace Cnetworkwinform {
 			// Error_mess
 			// 
 			this->Error_mess->AutoSize = true;
-			this->Error_mess->BackColor = System::Drawing::Color::Black;
+			this->Error_mess->BackColor = System::Drawing::Color::LightGray;
+			this->Error_mess->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->Error_mess->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
 			this->Error_mess->ForeColor = System::Drawing::Color::Red;
 			this->Error_mess->Location = System::Drawing::Point(352, 135);
 			this->Error_mess->Name = L"Error_mess";
-			this->Error_mess->Size = System::Drawing::Size(838, 54);
+			this->Error_mess->Size = System::Drawing::Size(840, 56);
 			this->Error_mess->TabIndex = 13;
 			this->Error_mess->Text = L"Error! Empty Input! Please Enter Post Content";
 			this->Error_mess->Visible = false;
@@ -303,6 +321,14 @@ namespace Cnetworkwinform {
 			// Reconnect_btn
 			// 
 			this->Reconnect_btn->BackColor = System::Drawing::Color::Black;
+			this->Reconnect_btn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->Reconnect_btn->FlatAppearance->BorderColor = System::Drawing::Color::White;
+			this->Reconnect_btn->FlatAppearance->BorderSize = 100;
+			this->Reconnect_btn->FlatAppearance->CheckedBackColor = System::Drawing::Color::Red;
+			this->Reconnect_btn->FlatAppearance->MouseDownBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->Reconnect_btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
 			this->Reconnect_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->Reconnect_btn->ForeColor = System::Drawing::Color::Red;
@@ -356,9 +382,9 @@ namespace Cnetworkwinform {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->BackColor = System::Drawing::Color::Black;
+			this->label4->BackColor = System::Drawing::Color::Transparent;
 			this->label4->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
-			this->label4->ForeColor = System::Drawing::Color::Red;
+			this->label4->ForeColor = System::Drawing::Color::White;
 			this->label4->Location = System::Drawing::Point(623, 226);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(499, 54);
@@ -413,9 +439,13 @@ namespace Cnetworkwinform {
 			// History_post_btn
 			// 
 			this->History_post_btn->BackColor = System::Drawing::Color::Black;
+			this->History_post_btn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->History_post_btn->FlatAppearance->BorderSize = 10;
+			this->History_post_btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
 			this->History_post_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->History_post_btn->ForeColor = System::Drawing::Color::Red;
+			this->History_post_btn->ForeColor = System::Drawing::Color::White;
 			this->History_post_btn->Location = System::Drawing::Point(408, 672);
 			this->History_post_btn->Name = L"History_post_btn";
 			this->History_post_btn->Size = System::Drawing::Size(299, 45);
@@ -427,9 +457,13 @@ namespace Cnetworkwinform {
 			// Post_Send_Currently_Session_btn
 			// 
 			this->Post_Send_Currently_Session_btn->BackColor = System::Drawing::Color::Black;
+			this->Post_Send_Currently_Session_btn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->Post_Send_Currently_Session_btn->FlatAppearance->BorderSize = 10;
+			this->Post_Send_Currently_Session_btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
 			this->Post_Send_Currently_Session_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Post_Send_Currently_Session_btn->ForeColor = System::Drawing::Color::Red;
+			this->Post_Send_Currently_Session_btn->ForeColor = System::Drawing::Color::White;
 			this->Post_Send_Currently_Session_btn->Location = System::Drawing::Point(1066, 674);
 			this->Post_Send_Currently_Session_btn->Name = L"Post_Send_Currently_Session_btn";
 			this->Post_Send_Currently_Session_btn->Size = System::Drawing::Size(299, 45);
@@ -441,10 +475,10 @@ namespace Cnetworkwinform {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->BackColor = System::Drawing::Color::Black;
+			this->label5->BackColor = System::Drawing::Color::Transparent;
 			this->label5->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
-			this->label5->ForeColor = System::Drawing::Color::Red;
-			this->label5->Location = System::Drawing::Point(613, 226);
+			this->label5->ForeColor = System::Drawing::Color::White;
+			this->label5->Location = System::Drawing::Point(633, 226);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(523, 54);
 			this->label5->TabIndex = 22;
@@ -454,6 +488,7 @@ namespace Cnetworkwinform {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::Red;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1394, 768);
@@ -476,6 +511,7 @@ namespace Cnetworkwinform {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->Welcome_Label);
+			this->ForeColor = System::Drawing::Color::Red;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::None;
 			this->Name = L"Client_Form";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;

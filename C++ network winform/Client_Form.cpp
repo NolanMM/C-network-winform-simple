@@ -8,7 +8,7 @@ using namespace System::Windows::Forms;
 void main()
 
 {
-
+    // Start to run the GUI of the program of Client
     Application::EnableVisualStyles();
 
     Application::SetCompatibleTextRenderingDefault(false);
