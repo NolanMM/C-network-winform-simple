@@ -307,7 +307,7 @@ namespace Cnetworkwinform {
 			// Error_mess
 			// 
 			this->Error_mess->AutoSize = true;
-			this->Error_mess->BackColor = System::Drawing::Color::LightGray;
+			this->Error_mess->BackColor = System::Drawing::Color::Black;
 			this->Error_mess->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->Error_mess->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
 			this->Error_mess->ForeColor = System::Drawing::Color::Red;
