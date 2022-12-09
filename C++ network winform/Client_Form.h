@@ -1,8 +1,8 @@
+#pragma once
+// Includes all the library needed for the program
 #include "stdafx.h"
 #include <Windows.h>
 #include <fstream>
-#pragma once
-//#include <bits/stdc++.h>
 #include <windows.networking.sockets.h>
 #include <string>
 #include <string.h>
@@ -10,10 +10,10 @@
 #pragma comment(lib, "Ws2_32.lib")
 #include <msclr\marshal_cppstd.h>
 using namespace msclr::interop;
-//using namespace msclr::interop;
+using namespace std;
+
 #define MAX_LINES 1000
 
-using namespace std;
 namespace Cnetworkwinform {
 
 	using namespace System;
@@ -487,8 +487,15 @@ namespace Cnetworkwinform {
 		}
 #pragma endregion
 		private: System::Void Exit_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			/*
+			//	Create string to send the message to exit the program to the server
+			//	The signal is "Exit";
+			*/
 			string TxBuffer = "Exit";
+			// Convert string to const char[] and store inside const char*
 			const char* test = TxBuffer.c_str();
+
+			// Send the message to socket that store inside the program when the form be loaded at the beginning
 			send(ClientSocket_2, test, strlen(test), 0);
 			//closes connection and socket
 			closesocket(ClientSocket_2);
@@ -497,98 +504,151 @@ namespace Cnetworkwinform {
 			WSACleanup();
 			exit(0);
 		}
+		/*
+		* // Function to convert char * to string and return string s
+		*/
 		string convertToString(char* a)
 		{
 			string s = a;
 			return s;
 		}
 
+		/* ********
+		// Use case: When user want to send the message to the server
+		// ********
 
+		/*************
+		// Requirement
+		// Post_content_box must be not null
+		// Author_Name_box and Topic_box can be null
+		// ***********
+
+		// Description:
+		//
+		// Function that take the input System::String^ from each box and convert to std::string and convert 
+		// to const char* and send it to the server by its string length()
+		// Function also allow to check for the input from post_box which must be != null and accept the null
+		// input from Author name box and Topic box and change it into unknown and send to server
+		*/
 		private: System::Void Send_To_Server_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+			/* Check if The post box be null will send the warning message and return
+			// Error mess visible change from false (at the beginning form load) to true
+			*/
 			if (Post_Content_box->Text->Length == 0)
 			{
 				Error_mess->Visible = true;
 				return;
 			}
+			/* Check if the Post box =! null hide the warning message
+			//
+			// Error mess visible change from true (if the post content box be 
+			// null last time) to false
+			*/
 			if (Post_Content_box->Text->Length != 0) {
 				Error_mess->Visible = false;
 			}
+			/* Check if the author name box == null then change to unknown for friendly interface
+			//
+			*/
 			if (Author_Name_box->Text->Length == 0)
 			{
-				Error_mess->Visible = false;
 				Author_Name_box->Text = "Unknow";
 			}
+			/* Check if the topic name box == null then change to unknown for friendly interface
+			//
+			*/
 			if (Topic_box->Text->Length == 0)
 			{
-				Error_mess->Visible = false;
 				Topic_box->Text = "Unknow";
 			}
+
+			// In the case want to store inside a string array
+			// string Item[2];
 			//Item[0] = marshal_as<string>(Author_Name_box->Text);
 			//Item[1] = marshal_as<string>(Topic_box->Text);
 			
-			
-			
+			// System::String^ combine to a single line by the default format
+			// [Author Name: ][Author_Name_box->Text][ --- ][Topic: ][Topic_box->Text][ --- ][Post Content: ][Post_Content_box->Text]
 			System::String^ test_System_string = "Author Name: " + Author_Name_box->Text + " --- " +"Topic: " + Topic_box->Text + " --- " + "Post Content: " + Post_Content_box->Text;
 
+			// Convert System::String^ to std::string name Total
 			string Total = marshal_as<string>(test_System_string);
+			// Convert std:: string to const char[] and store the address in side const char* name Send_message
 			const char* Send_message = Total.c_str();
 
+			// In case want to take input from user in the ASS3 REPO
 			//char TxBuffer[128] = {};
 			//string TxBuffer;
 			//cout << "Enter a String to transmit" << endl;
 			//TxBuffer = Author_name + " " + Topic;
 			//getline(cin, TxBuffer);
 
+			// Send the message to Server
 			send(ClientSocket_2, Send_message, strlen(Send_message), 0);
 			
-
+			// Create a variable to store the receive message
 			char RxBuffer[128] = {};
 
+			// Received the message and store inside a char array name RxBuffer
 			recv(ClientSocket_2, RxBuffer, sizeof(RxBuffer), 0);
+
+			// Convert char array to std::string by using function convertToString
 			string rev = convertToString(RxBuffer);
+
+			// Create a new System::String^ inorder to show to the interface for the user
+			// Using listview to displayed all the information sent to the server and responded from server
 			String^ Respond = gcnew String(rev.data());
+
+			// Create new listview items and assign all the elements
 			ListViewItem^ items = gcnew ListViewItem(Author_Name_box->Text);
 			items->SubItems->Add(Topic_box->Text);
 			items->SubItems->Add(Post_Content_box->Text);
 			items->SubItems->Add(Respond);
-			//
+			// Insert Items at the top of the listview
 			Listview_topic->Items->Insert(0, items);
 			//
+			// Clear all the Text_box and prepare for the next input from user
 			Post_Content_box->Clear();
 			Author_Name_box->Clear();
 			Topic_box->Clear();
+			//  Erase the data from this time free the memory
 			Total.erase();
-		}
+			}
 		SOCKET ClientSocket_2;
-private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs^ e) {
+		private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs^ e) {
 
-	//starts Winsock DLLs
-	WSADATA wsaData;
-	if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
-		return;
-	}
+		//starts Winsock DLLs
+		WSADATA wsaData;
+		if ((WSAStartup(MAKEWORD(2, 2), &wsaData)) != 0) {
+			return;
+		}
 
-	//initializes socket. SOCK_STREAM: TCP
-	SOCKET ClientSocket;
-	ClientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (ClientSocket == INVALID_SOCKET) {
-		WSACleanup();
-		return;
+		//initializes socket. SOCK_STREAM: TCP
+		SOCKET ClientSocket;
+		ClientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+		if (ClientSocket == INVALID_SOCKET) {
+			WSACleanup();
+			return;
+		}
+		//Connect socket to specified server
+		sockaddr_in SvrAddr;
+		SvrAddr.sin_family = AF_INET;						//Address family type itnernet
+		SvrAddr.sin_port = htons(27000);					//port (host to network conversion)
+		SvrAddr.sin_addr.s_addr = inet_addr("127.0.0.1");	//IP address
+		if ((connect(ClientSocket, (struct sockaddr*)&SvrAddr, sizeof(SvrAddr))) == SOCKET_ERROR) {
+			closesocket(ClientSocket);
+			WSACleanup();
+			return;
+		}
+		else {	
+			ClientSocket_2 = ClientSocket;
+		}
 	}
-	//Connect socket to specified server
-	sockaddr_in SvrAddr;
-	SvrAddr.sin_family = AF_INET;						//Address family type itnernet
-	SvrAddr.sin_port = htons(27000);					//port (host to network conversion)
-	SvrAddr.sin_addr.s_addr = inet_addr("127.0.0.1");	//IP address
-	if ((connect(ClientSocket, (struct sockaddr*)&SvrAddr, sizeof(SvrAddr))) == SOCKET_ERROR) {
-		closesocket(ClientSocket);
-		WSACleanup();
-		return;
-	}
-	else {
-		ClientSocket_2 = ClientSocket;
-	}
-
+	//
+	// ??
+	// Show the history of the file  at the beginning codes
+	// ??
+	//
 	/*string filename = "Data.txt";
 	ifstream file;
 
@@ -662,23 +722,30 @@ private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs
 		lines++;
 	}
 
-	file.close();*/
+	file.close();
 	
-}
+}*/
 
+		// Functions when the user want to disconnect to server but dont want to exit the program yet to check for the history of the posts
 
-private: System::Void Disconnect_btn_Click(System::Object^ sender, System::EventArgs^ e) {
-	string TxBuffer = "*";
-	const char* test = TxBuffer.c_str();
-	send(ClientSocket_2, test, strlen(test), 0);
-	//closes connection and socket
-	closesocket(ClientSocket_2);
+		private: System::Void Disconnect_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+		// Create and send the signal disconnect to the server
+		string TxBuffer = "*";
+		const char* test = TxBuffer.c_str();
+		send(ClientSocket_2, test, strlen(test), 0);
+		//closes connection and socket
+		closesocket(ClientSocket_2);
 
-	//frees Winsock DLL resources
-	WSACleanup();
-	Reconnect_btn->Visible = true;
-	Disconnect_btn->Visible = false;
-}
+		//frees Winsock DLL resources
+		WSACleanup();
+		
+		// Show the button reconnect in case user want to reconnect to the server again
+		Reconnect_btn->Visible = true;
+		// Hide the disconnect from the form when the disconnect progress be successful
+		Disconnect_btn->Visible = false;
+
+		}
+// Funtions when the user want to reconnect to the server
 private: System::Void Reconnect_btn_Click(System::Object^ sender, System::EventArgs^ e) {
 	//starts Winsock DLLs
 	WSADATA wsaData;
@@ -707,9 +774,13 @@ private: System::Void Reconnect_btn_Click(System::Object^ sender, System::EventA
 	else {
 		ClientSocket_2 = ClientSocket;
 	}
+	// The button disconnect visible be set to true when the reconnection be successful
 	Disconnect_btn->Visible = true;
+	// set the visible of the reconnect button to false and hide it from the user 
 	Reconnect_btn->Visible = false;
 }
+	// Function Exit when the user want to exit by X button 
+	// Create a signal "Exit" send to the server to exit the server
 private: System::Void End_Click(System::Object^ sender, System::EventArgs^ e) {
 	string TxBuffer = "Exit";
 	const char* test = TxBuffer.c_str();
@@ -721,40 +792,65 @@ private: System::Void End_Click(System::Object^ sender, System::EventArgs^ e) {
 	WSACleanup();
 	exit(0);
 }
+
+// Function that take the data from the file that be saved by the server from last sessions and show it to the user
 private: System::Void History_post_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	
+	// Open and read from file name Data 
 	string filename = "Data.txt";
 	ifstream file;
-
-
 	file.open(filename);
+
+	// Check if the file was open fail it will Sent a message
 	if (file.fail())
 	{
 		cout << "File failed to open." << endl;
 	}
+	// Create a string array can store 1000 lines in the text files that content 1000 posts
 	string array[MAX_LINES];
+	// Set the counter and the index for each lines in the text files
 	int lines = 0;
+	// While loop to loop until the end of the files
 	while (!file.eof())
 	{
+		// Create a string delimiter to using string split from the file default format for messages
+		// and store all the element are author name:"(Data), " Topic: "(Data)", "Post Content: "(Data)" into each elements Items[3]
+		//"Author Name: " + Author_Name_box->Text + " --- " +"Topic: " + Topic_box->Text + " --- " + "Post Content: " + Post_Content_box->Text;
 		string delimiter = " --- ";
+
+		// Take every single lines inside the file and store it into the array of string
+		// Each items inside array is a string format
+		// "Author Name: " + Author_Name_box->Text + " --- " +"Topic: " + Topic_box->Text + " --- " + "Post Content: " + Post_Content_box->Text;
 		getline(file, array[lines]);
 
+		// Check if Reach the limits of the lines or not
 		if (lines == MAX_LINES)
 		{
 			cout << "Max storage reached" << endl;
 			break;
 		}
+
+		// Set the pos to store the count of length want to substring 
 		size_t pos = 0;
 		string token;
+		// Counter for Items string array
 		int count = 0;
 		string Items[3];
 
+		// Substring first fine all the address of delimiter inside each lines string
 		while ((pos = array[lines].find(delimiter)) != string::npos) {
+			// Substring and store the item string inside the token
+			// token = array[0].substr(0, pos);      ===   "Author Name: (Data)"
+			// token = array[1].substr(0, pos);      ===   "Topic: (Data)"
+			// token = array[2].substr(0, pos);      ===   "Post Content: (Data)"
 			token = array[lines].substr(0, pos);
 			Items[count] = token;
 			count++;
+			// Take the last elemtent and store it inside the last items of string array
 			Items[2] = array[lines].erase(0, pos + delimiter.length());
 		}
-
+		// Substring to take the Data from "Author Name: (Data)" <------- Items[0]
+		// Using the same technique above but change the delimiter to "Author Name: " and take the items
 		string delimiter_author = "Author Name: ";
 		string author_name_;
 		while ((pos = Items[0].find(delimiter_author)) != string::npos) {
@@ -762,9 +858,11 @@ private: System::Void History_post_btn_Click(System::Object^ sender, System::Eve
 			author_name_ = token;
 			author_name_ = Items[0].erase(0, pos + delimiter_author.length());
 		}
+		// Convert the author name std::string to System::String^ and store inside variable author_name
 		String^ author_name = gcnew String(author_name_.c_str());
 
-
+		// Substring to take the Data from "Topic: (Data)" <------- Items[1]
+		// Using the same technique above but change the delimiter to "Topic: " and take the items
 		string delimiter_topic = "Topic: ";
 		string topic_name_;
 		while ((pos = Items[1].find(delimiter_topic)) != string::npos) {
@@ -772,8 +870,11 @@ private: System::Void History_post_btn_Click(System::Object^ sender, System::Eve
 			topic_name_ = token;
 			topic_name_ = Items[1].erase(0, pos + delimiter_topic.length());
 		}
+		// Convert the topic_name std::string to System::String^ and store inside variable topic
 		String^ topic = gcnew String(topic_name_.c_str());
 
+		// Substring to take the Data from "Post Content: (Data)" <-------- Items[2]
+		// Using the same technique above but change the delimiter to "Post Content: " and take the items
 		string delimiter_Content = "Post Content: ";
 		string Description_;
 		while ((pos = Items[2].find(delimiter_Content)) != string::npos) {
@@ -781,9 +882,15 @@ private: System::Void History_post_btn_Click(System::Object^ sender, System::Eve
 			Description_ = token;
 			Description_ = Items[2].erase(0, pos + delimiter_Content.length());
 		}
+		// Convert the  std::string to System::String^ and store inside variable author_name
+		// Convert the Description std::string to System::String^ and store inside variable Description
 		String^ Desctiption = gcnew String(Description_.c_str());
 
+		// Create the string Received to announce to the user that the lines are already inside the 
+		//file so it already received and saved by the server
 		String^ Respond = gcnew String("Received");
+
+		// Check if the author_name Length != to avoid string array Items[] be null in the first elemtent that store the author name
 		if (author_name->Length != 0)
 		{
 			ListViewItem^ items = gcnew ListViewItem(author_name);
@@ -792,18 +899,23 @@ private: System::Void History_post_btn_Click(System::Object^ sender, System::Eve
 			items->SubItems->Add(Respond);
 			Items_Send_Server_ListView->Items->Insert(0, items);
 		}
+		// Increment the counter of the lines to store the nexts lines into program and process
 		lines++;
 	}
-
+	// Close the files
 	file.close();
+	// The list view containts all the post just sent hide from users and also the lable for it
 	Listview_topic->Visible = false;
-	label4->Visible = true;
 	label5->Visible = false;
+	// Show the list view of history post that be stored in the files by the server to track
+	label4->Visible = true;
 	Items_Send_Server_ListView->Visible = true;
 }
 private: System::Void Post_Send_Currently_Session_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	// Hide the History listview of the post that be store in the file and also its label
 	Items_Send_Server_ListView->Visible = false;
 	label4->Visible = false;
+	// Show the Content of the listview that store the items that be sent in currently session
 	label5->Visible = true;
 	Listview_topic->Visible = true;
 
