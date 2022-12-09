@@ -74,6 +74,16 @@ namespace Cnetworkwinform {
 
 	private: System::Windows::Forms::ColumnHeader^ Respond;
 	private: System::Windows::Forms::Label^ label4;
+	private: System::Windows::Forms::ListView^ Items_Send_Server_ListView;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader1;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader2;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader3;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader4;
+	public: System::Windows::Forms::Button^ History_post_btn;
+	private:
+	public: System::Windows::Forms::Button^ Post_Send_Currently_Session_btn;
+	private: System::Windows::Forms::Label^ label5;
+	public:
 	public:
 	private:
 
@@ -124,6 +134,14 @@ namespace Cnetworkwinform {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->Post_Content_box = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->Items_Send_Server_ListView = (gcnew System::Windows::Forms::ListView());
+			this->columnHeader1 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->columnHeader2 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->columnHeader3 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->columnHeader4 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->History_post_btn = (gcnew System::Windows::Forms::Button());
+			this->Post_Send_Currently_Session_btn = (gcnew System::Windows::Forms::Button());
+			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Welcome_Label
@@ -348,6 +366,90 @@ namespace Cnetworkwinform {
 			this->label4->Text = L"Post History In System File";
 			this->label4->Visible = false;
 			// 
+			// Items_Send_Server_ListView
+			// 
+			this->Items_Send_Server_ListView->BackColor = System::Drawing::Color::Black;
+			this->Items_Send_Server_ListView->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Items_Send_Server_ListView.BackgroundImage")));
+			this->Items_Send_Server_ListView->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->Items_Send_Server_ListView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(4) {
+				this->columnHeader1,
+					this->columnHeader2, this->columnHeader3, this->columnHeader4
+			});
+			this->Items_Send_Server_ListView->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold));
+			this->Items_Send_Server_ListView->ForeColor = System::Drawing::Color::White;
+			this->Items_Send_Server_ListView->GridLines = true;
+			this->Items_Send_Server_ListView->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
+			this->Items_Send_Server_ListView->HideSelection = false;
+			this->Items_Send_Server_ListView->Location = System::Drawing::Point(408, 283);
+			this->Items_Send_Server_ListView->MultiSelect = false;
+			this->Items_Send_Server_ListView->Name = L"Items_Send_Server_ListView";
+			this->Items_Send_Server_ListView->Size = System::Drawing::Size(941, 226);
+			this->Items_Send_Server_ListView->TabIndex = 19;
+			this->Items_Send_Server_ListView->UseCompatibleStateImageBehavior = false;
+			this->Items_Send_Server_ListView->View = System::Windows::Forms::View::Details;
+			this->Items_Send_Server_ListView->Visible = false;
+			// 
+			// columnHeader1
+			// 
+			this->columnHeader1->Text = L"Author Name";
+			this->columnHeader1->Width = 180;
+			// 
+			// columnHeader2
+			// 
+			this->columnHeader2->Text = L"Topic";
+			this->columnHeader2->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->columnHeader2->Width = 120;
+			// 
+			// columnHeader3
+			// 
+			this->columnHeader3->Text = L"Post Content";
+			this->columnHeader3->Width = 360;
+			// 
+			// columnHeader4
+			// 
+			this->columnHeader4->Text = L"Respond From Server";
+			this->columnHeader4->Width = 262;
+			// 
+			// History_post_btn
+			// 
+			this->History_post_btn->BackColor = System::Drawing::Color::Black;
+			this->History_post_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->History_post_btn->ForeColor = System::Drawing::Color::Red;
+			this->History_post_btn->Location = System::Drawing::Point(408, 672);
+			this->History_post_btn->Name = L"History_post_btn";
+			this->History_post_btn->Size = System::Drawing::Size(299, 45);
+			this->History_post_btn->TabIndex = 20;
+			this->History_post_btn->Text = L"History Post In System";
+			this->History_post_btn->UseVisualStyleBackColor = false;
+			this->History_post_btn->Click += gcnew System::EventHandler(this, &Client_Form::History_post_btn_Click);
+			// 
+			// Post_Send_Currently_Session_btn
+			// 
+			this->Post_Send_Currently_Session_btn->BackColor = System::Drawing::Color::Black;
+			this->Post_Send_Currently_Session_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->Post_Send_Currently_Session_btn->ForeColor = System::Drawing::Color::Red;
+			this->Post_Send_Currently_Session_btn->Location = System::Drawing::Point(1066, 674);
+			this->Post_Send_Currently_Session_btn->Name = L"Post_Send_Currently_Session_btn";
+			this->Post_Send_Currently_Session_btn->Size = System::Drawing::Size(299, 45);
+			this->Post_Send_Currently_Session_btn->TabIndex = 21;
+			this->Post_Send_Currently_Session_btn->Text = L"Post Sent This Session";
+			this->Post_Send_Currently_Session_btn->UseVisualStyleBackColor = false;
+			this->Post_Send_Currently_Session_btn->Click += gcnew System::EventHandler(this, &Client_Form::Post_Send_Currently_Session_btn_Click);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->BackColor = System::Drawing::Color::Black;
+			this->label5->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
+			this->label5->ForeColor = System::Drawing::Color::Red;
+			this->label5->Location = System::Drawing::Point(613, 226);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(523, 54);
+			this->label5->TabIndex = 22;
+			this->label5->Text = L"Posts sent Currently Session";
+			// 
 			// Client_Form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -355,6 +457,10 @@ namespace Cnetworkwinform {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1394, 768);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->Post_Send_Currently_Session_btn);
+			this->Controls->Add(this->History_post_btn);
+			this->Controls->Add(this->Items_Send_Server_ListView);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->Post_Content_box);
 			this->Controls->Add(this->label3);
@@ -483,7 +589,7 @@ private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs
 		ClientSocket_2 = ClientSocket;
 	}
 
-	string filename = "Data.txt";
+	/*string filename = "Data.txt";
 	ifstream file;
 
 	
@@ -551,14 +657,15 @@ private: System::Void Client_Form_Load(System::Object^ sender, System::EventArgs
 			items->SubItems->Add(topic);
 			items->SubItems->Add(Desctiption);
 			items->SubItems->Add(Respond);
-			Listview_topic->Items->Insert(0, items);
+			Items_Send_Server_ListView->Items->Insert(0, items);
 		}
 		lines++;
 	}
 
-	file.close();
+	file.close();*/
 	
 }
+
 
 private: System::Void Disconnect_btn_Click(System::Object^ sender, System::EventArgs^ e) {
 	string TxBuffer = "*";
@@ -613,6 +720,93 @@ private: System::Void End_Click(System::Object^ sender, System::EventArgs^ e) {
 	//frees Winsock DLL resources
 	WSACleanup();
 	exit(0);
+}
+private: System::Void History_post_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	string filename = "Data.txt";
+	ifstream file;
+
+
+	file.open(filename);
+	if (file.fail())
+	{
+		cout << "File failed to open." << endl;
+	}
+	string array[MAX_LINES];
+	int lines = 0;
+	while (!file.eof())
+	{
+		string delimiter = " --- ";
+		getline(file, array[lines]);
+
+		if (lines == MAX_LINES)
+		{
+			cout << "Max storage reached" << endl;
+			break;
+		}
+		size_t pos = 0;
+		string token;
+		int count = 0;
+		string Items[3];
+
+		while ((pos = array[lines].find(delimiter)) != string::npos) {
+			token = array[lines].substr(0, pos);
+			Items[count] = token;
+			count++;
+			Items[2] = array[lines].erase(0, pos + delimiter.length());
+		}
+
+		string delimiter_author = "Author Name: ";
+		string author_name_;
+		while ((pos = Items[0].find(delimiter_author)) != string::npos) {
+			token = Items[0].substr(0, pos);
+			author_name_ = token;
+			author_name_ = Items[0].erase(0, pos + delimiter_author.length());
+		}
+		String^ author_name = gcnew String(author_name_.c_str());
+
+
+		string delimiter_topic = "Topic: ";
+		string topic_name_;
+		while ((pos = Items[1].find(delimiter_topic)) != string::npos) {
+			token = Items[1].substr(0, pos);
+			topic_name_ = token;
+			topic_name_ = Items[1].erase(0, pos + delimiter_topic.length());
+		}
+		String^ topic = gcnew String(topic_name_.c_str());
+
+		string delimiter_Content = "Post Content: ";
+		string Description_;
+		while ((pos = Items[2].find(delimiter_Content)) != string::npos) {
+			token = Items[2].substr(0, pos);
+			Description_ = token;
+			Description_ = Items[2].erase(0, pos + delimiter_Content.length());
+		}
+		String^ Desctiption = gcnew String(Description_.c_str());
+
+		String^ Respond = gcnew String("Received");
+		if (author_name->Length != 0)
+		{
+			ListViewItem^ items = gcnew ListViewItem(author_name);
+			items->SubItems->Add(topic);
+			items->SubItems->Add(Desctiption);
+			items->SubItems->Add(Respond);
+			Items_Send_Server_ListView->Items->Insert(0, items);
+		}
+		lines++;
+	}
+
+	file.close();
+	Listview_topic->Visible = false;
+	label4->Visible = true;
+	label5->Visible = false;
+	Items_Send_Server_ListView->Visible = true;
+}
+private: System::Void Post_Send_Currently_Session_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	Items_Send_Server_ListView->Visible = false;
+	label4->Visible = false;
+	label5->Visible = true;
+	Listview_topic->Visible = true;
+
 }
 };
 }
