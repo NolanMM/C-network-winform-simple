@@ -16,7 +16,11 @@ using namespace msclr::interop;
 using namespace std;
 
 #define MAX_LINES 1000
-
+struct Node {
+	string lines;
+	Node* next;
+};
+struct Node* head = new Node;
 namespace Cnetworkwinform {
 
 	using namespace System;
@@ -86,6 +90,21 @@ namespace Cnetworkwinform {
 	private:
 	public: System::Windows::Forms::Button^ Post_Send_Currently_Session_btn;
 	private: System::Windows::Forms::Label^ label5;
+	public: System::Windows::Forms::Button^ add_post_button;
+	public: System::Windows::Forms::Button^ send_collection_btn;
+	private: System::Windows::Forms::ListView^ Items_Post_Collection_ListView;
+	public:
+
+	public:
+	private: System::Windows::Forms::ColumnHeader^ columnHeader5;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader6;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader7;
+	private: System::Windows::Forms::ColumnHeader^ columnHeader8;
+	private: System::Windows::Forms::Label^ Post_collection_label;
+	private:
+
+	private:
+
 	public:
 	public:
 	private:
@@ -145,6 +164,14 @@ namespace Cnetworkwinform {
 			this->History_post_btn = (gcnew System::Windows::Forms::Button());
 			this->Post_Send_Currently_Session_btn = (gcnew System::Windows::Forms::Button());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->add_post_button = (gcnew System::Windows::Forms::Button());
+			this->send_collection_btn = (gcnew System::Windows::Forms::Button());
+			this->Items_Post_Collection_ListView = (gcnew System::Windows::Forms::ListView());
+			this->columnHeader5 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->columnHeader6 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->columnHeader7 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->columnHeader8 = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Post_collection_label = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// Welcome_Label
@@ -446,7 +473,7 @@ namespace Cnetworkwinform {
 			this->History_post_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->History_post_btn->ForeColor = System::Drawing::Color::White;
-			this->History_post_btn->Location = System::Drawing::Point(408, 672);
+			this->History_post_btn->Location = System::Drawing::Point(1066, 616);
 			this->History_post_btn->Name = L"History_post_btn";
 			this->History_post_btn->Size = System::Drawing::Size(299, 45);
 			this->History_post_btn->TabIndex = 20;
@@ -484,6 +511,99 @@ namespace Cnetworkwinform {
 			this->label5->TabIndex = 22;
 			this->label5->Text = L"Posts sent Currently Session";
 			// 
+			// add_post_button
+			// 
+			this->add_post_button->BackColor = System::Drawing::Color::Black;
+			this->add_post_button->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->add_post_button->FlatAppearance->BorderSize = 10;
+			this->add_post_button->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->add_post_button->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->add_post_button->ForeColor = System::Drawing::Color::White;
+			this->add_post_button->Location = System::Drawing::Point(408, 616);
+			this->add_post_button->Name = L"add_post_button";
+			this->add_post_button->Size = System::Drawing::Size(308, 45);
+			this->add_post_button->TabIndex = 23;
+			this->add_post_button->Text = L"Add Post to Collection";
+			this->add_post_button->UseVisualStyleBackColor = false;
+			this->add_post_button->Click += gcnew System::EventHandler(this, &Client_Form::add_post_button_Click);
+			// 
+			// send_collection_btn
+			// 
+			this->send_collection_btn->BackColor = System::Drawing::Color::Black;
+			this->send_collection_btn->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
+			this->send_collection_btn->FlatAppearance->BorderSize = 10;
+			this->send_collection_btn->FlatAppearance->MouseOverBackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->send_collection_btn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->send_collection_btn->ForeColor = System::Drawing::Color::White;
+			this->send_collection_btn->Location = System::Drawing::Point(408, 667);
+			this->send_collection_btn->Name = L"send_collection_btn";
+			this->send_collection_btn->Size = System::Drawing::Size(308, 45);
+			this->send_collection_btn->TabIndex = 24;
+			this->send_collection_btn->Text = L"Send Collection of Posts";
+			this->send_collection_btn->UseVisualStyleBackColor = false;
+			this->send_collection_btn->Click += gcnew System::EventHandler(this, &Client_Form::send_collection_btn_Click);
+			// 
+			// Items_Post_Collection_ListView
+			// 
+			this->Items_Post_Collection_ListView->BackColor = System::Drawing::Color::Black;
+			this->Items_Post_Collection_ListView->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Items_Post_Collection_ListView.BackgroundImage")));
+			this->Items_Post_Collection_ListView->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->Items_Post_Collection_ListView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(4) {
+				this->columnHeader5,
+					this->columnHeader6, this->columnHeader7, this->columnHeader8
+			});
+			this->Items_Post_Collection_ListView->Font = (gcnew System::Drawing::Font(L"Segoe UI", 18, System::Drawing::FontStyle::Bold));
+			this->Items_Post_Collection_ListView->ForeColor = System::Drawing::Color::White;
+			this->Items_Post_Collection_ListView->GridLines = true;
+			this->Items_Post_Collection_ListView->HeaderStyle = System::Windows::Forms::ColumnHeaderStyle::Nonclickable;
+			this->Items_Post_Collection_ListView->HideSelection = false;
+			this->Items_Post_Collection_ListView->Location = System::Drawing::Point(408, 283);
+			this->Items_Post_Collection_ListView->MultiSelect = false;
+			this->Items_Post_Collection_ListView->Name = L"Items_Post_Collection_ListView";
+			this->Items_Post_Collection_ListView->Size = System::Drawing::Size(941, 226);
+			this->Items_Post_Collection_ListView->TabIndex = 25;
+			this->Items_Post_Collection_ListView->UseCompatibleStateImageBehavior = false;
+			this->Items_Post_Collection_ListView->View = System::Windows::Forms::View::Details;
+			this->Items_Post_Collection_ListView->Visible = false;
+			// 
+			// columnHeader5
+			// 
+			this->columnHeader5->Text = L"Author Name";
+			this->columnHeader5->Width = 180;
+			// 
+			// columnHeader6
+			// 
+			this->columnHeader6->Text = L"Topic";
+			this->columnHeader6->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->columnHeader6->Width = 120;
+			// 
+			// columnHeader7
+			// 
+			this->columnHeader7->Text = L"Post Content";
+			this->columnHeader7->Width = 360;
+			// 
+			// columnHeader8
+			// 
+			this->columnHeader8->Text = L"Respond From Server";
+			this->columnHeader8->Width = 262;
+			// 
+			// Post_collection_label
+			// 
+			this->Post_collection_label->AutoSize = true;
+			this->Post_collection_label->BackColor = System::Drawing::Color::Transparent;
+			this->Post_collection_label->Font = (gcnew System::Drawing::Font(L"Segoe UI Semibold", 30, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
+			this->Post_collection_label->ForeColor = System::Drawing::Color::White;
+			this->Post_collection_label->Location = System::Drawing::Point(773, 226);
+			this->Post_collection_label->Name = L"Post_collection_label";
+			this->Post_collection_label->Size = System::Drawing::Size(291, 54);
+			this->Post_collection_label->TabIndex = 26;
+			this->Post_collection_label->Text = L"Post Collection";
+			this->Post_collection_label->Visible = false;
+			// 
 			// Client_Form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -492,6 +612,10 @@ namespace Cnetworkwinform {
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1394, 768);
+			this->Controls->Add(this->Post_collection_label);
+			this->Controls->Add(this->Items_Post_Collection_ListView);
+			this->Controls->Add(this->send_collection_btn);
+			this->Controls->Add(this->add_post_button);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->Post_Send_Currently_Session_btn);
 			this->Controls->Add(this->History_post_btn);
@@ -946,14 +1070,215 @@ private: System::Void History_post_btn_Click(System::Object^ sender, System::Eve
 	// Show the list view of history post that be stored in the files by the server to track
 	label4->Visible = true;
 	Items_Send_Server_ListView->Visible = true;
+	Items_Post_Collection_ListView->Visible = false;
+	Post_collection_label->Visible = false;
 }
 private: System::Void Post_Send_Currently_Session_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	Items_Post_Collection_ListView->Visible = false;
+	Post_collection_label->Visible = false;
 	// Hide the History listview of the post that be store in the file and also its label
 	Items_Send_Server_ListView->Visible = false;
 	label4->Visible = false;
 	// Show the Content of the listview that store the items that be sent in currently session
 	label5->Visible = true;
 	Listview_topic->Visible = true;
+}
+
+
+	   // only for the 1st Node
+	   void initNode(struct Node* head, string lines) {
+		   head->lines = lines;
+		   head->next = NULL;
+	   }
+
+	   // apending
+	   void addNode(struct Node* head, string lines) {
+		   Node* newNode = new Node;
+
+		   newNode->lines = lines;
+		   newNode->next = NULL;
+
+		   Node* cur = head;
+		   while (cur) {
+			   if (cur->next == NULL) {
+				   cur->next = newNode;
+				   return;
+			   }
+			   cur = cur->next;
+		   }
+	   }
+
+	   void looping_list_send(struct Node* head) {
+		   Node* list = head;
+		   while (list) {
+			   const char* Send_message = list->lines.c_str();
+			   send(ClientSocket_2, Send_message, strlen(Send_message), 0);
+			   // Create a variable to store the receive message
+			   char RxBuffer[128] = {};
+
+			   // Received the message and store inside a char array name RxBuffer
+			   recv(ClientSocket_2, RxBuffer, sizeof(RxBuffer), 0);
+
+			   // Convert char array to std::string by using function convertToString
+			   string rev = convertToString(RxBuffer);
+
+			   // Create a new System::String^ inorder to show to the interface for the user
+				// Using listview to displayed all the information sent to the server and responded from server
+			   String^ Respond = gcnew String(rev.data());
+			   // Set the pos to store the count of length want to substring 
+			   size_t pos = 0;
+			   string token;
+			   // Counter for Items string array
+			   int count = 0;
+			   string Items[3];
+			   string delimiter = " --- ";
+			   // Substring first fine all the address of delimiter inside each lines string
+			   while ((pos = list->lines.find(delimiter)) != string::npos) {
+				   // Substring and store the item string inside the token
+				   // token = array[0].substr(0, pos);      ===   "Author Name: (Data)"
+				   // token = array[1].substr(0, pos);      ===   "Topic: (Data)"
+				   // token = array[2].substr(0, pos);      ===   "Post Content: (Data)"
+				   token = list->lines.substr(0, pos);
+				   Items[count] = token;
+				   count++;
+				   // Take the last elemtent and store it inside the last items of string array
+				   Items[2] = list->lines.erase(0, pos + delimiter.length());
+			   }
+			   // Substring to take the Data from "Author Name: (Data)" <------- Items[0]
+			   // Using the same technique above but change the delimiter to "Author Name: " and take the items
+			   string delimiter_author = "Author Name: ";
+			   string author_name_;
+			   while ((pos = Items[0].find(delimiter_author)) != string::npos) {
+				   token = Items[0].substr(0, pos);
+				   author_name_ = token;
+				   author_name_ = Items[0].erase(0, pos + delimiter_author.length());
+			   }
+			   // Convert the author name std::string to System::String^ and store inside variable author_name
+			   String^ author_name = gcnew String(author_name_.c_str());
+
+			   // Substring to take the Data from "Topic: (Data)" <------- Items[1]
+			   // Using the same technique above but change the delimiter to "Topic: " and take the items
+			   string delimiter_topic = "Topic: ";
+			   string topic_name_;
+			   while ((pos = Items[1].find(delimiter_topic)) != string::npos) {
+				   token = Items[1].substr(0, pos);
+				   topic_name_ = token;
+				   topic_name_ = Items[1].erase(0, pos + delimiter_topic.length());
+			   }
+			   // Convert the topic_name std::string to System::String^ and store inside variable topic
+			   String^ topic = gcnew String(topic_name_.c_str());
+
+			   // Substring to take the Data from "Post Content: (Data)" <-------- Items[2]
+			   // Using the same technique above but change the delimiter to "Post Content: " and take the items
+			   string delimiter_Content = "Post Content: ";
+			   string Description_;
+			   while ((pos = Items[2].find(delimiter_Content)) != string::npos) {
+				   token = Items[2].substr(0, pos);
+				   Description_ = token;
+				   Description_ = Items[2].erase(0, pos + delimiter_Content.length());
+			   }
+			   // Convert the  std::string to System::String^ and store inside variable author_name
+			   // Convert the Description std::string to System::String^ and store inside variable Description
+			   String^ Desctiption = gcnew String(Description_.c_str());
+			   // Create new listview items and assign all the elements
+			   ListViewItem^ items = gcnew ListViewItem(author_name);
+			   items->SubItems->Add(topic);
+			   items->SubItems->Add(Desctiption);
+			   items->SubItems->Add(Respond);
+			   // Insert Items at the top of the listview
+			   Listview_topic->Items->Insert(0, items);
+
+			   list = list->next;
+		   }
+
+		   label5->Visible = true;
+		   Listview_topic->Visible = true;
+	   }
+	   int count_post_collection = 0;
+private: System::Void add_post_button_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	Items_Post_Collection_ListView->Visible = true;
+	Post_collection_label->Visible = true;
+
+	// Hide the History listview of the post that be store in the file and also its label
+	Items_Send_Server_ListView->Visible = false;
+	label4->Visible = false;
+	// Show the Content of the listview that store the items that be sent in currently session
+	label5->Visible = false;
+	Listview_topic->Visible = false;
+	/* Check if The post box be null will send the warning message and return
+			// Error mess visible change from false (at the beginning form load) to true
+			*/
+	if (Post_Content_box->Text->Length == 0)
+	{
+		Error_mess->Visible = true;
+		return;
+	}
+	/* Check if the Post box =! null hide the warning message
+	//
+	// Error mess visible change from true (if the post content box be
+	// null last time) to false
+	*/
+	if (Post_Content_box->Text->Length != 0) {
+		Error_mess->Visible = false;
+	}
+	/* Check if the author name box == null then change to unknown for friendly interface
+	//
+	*/
+	if (Author_Name_box->Text->Length == 0)
+	{
+		Author_Name_box->Text = "Unknow";
+	}
+	/* Check if the topic name box == null then change to unknown for friendly interface
+	//
+	*/
+	if (Topic_box->Text->Length == 0)
+	{
+		Topic_box->Text = "Unknow";
+	}
+	System::String^ Respond = "Not Send";
+	ListViewItem^ items = gcnew ListViewItem(Author_Name_box->Text);
+	items->SubItems->Add(Topic_box->Text);
+	items->SubItems->Add(Post_Content_box->Text);
+	items->SubItems->Add(Respond);
+	Items_Post_Collection_ListView->Items->Insert(0, items);
+
+	// In the case want to store inside a string array
+	// string Item[2];
+	//Item[0] = marshal_as<string>(Author_Name_box->Text);
+	//Item[1] = marshal_as<string>(Topic_box->Text);
+
+	// System::String^ combine to a single line by the default format
+	// [Author Name: ][Author_Name_box->Text][ --- ][Topic: ][Topic_box->Text][ --- ][Post Content: ][Post_Content_box->Text]
+	System::String^ test_System_string = "Author Name: " + Author_Name_box->Text + " --- " + "Topic: " + Topic_box->Text + " --- " + "Post Content: " + Post_Content_box->Text;
+
+	// Convert System::String^ to std::string name Total
+	string total = marshal_as<string>(test_System_string);
+	if(count_post_collection ==0)
+	{
+		initNode(head, total);
+		count_post_collection++;
+	}
+	else
+	{
+		addNode(head, total);
+		count_post_collection++;
+	}
+
+	Post_Content_box->Clear();
+	Author_Name_box->Clear();
+	Topic_box->Clear();
+	//  Erase the data from this time free the memory
+	total.erase();
+}
+	   
+private: System::Void send_collection_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	looping_list_send(head);
+	struct Node* head_new = new Node;
+	head = head_new;
+	Items_Post_Collection_ListView->Visible = false;
+	Post_collection_label->Visible = false;
+	count_post_collection = 0;
 
 }
 };
